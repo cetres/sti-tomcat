@@ -10,6 +10,12 @@ LABEL io.k8s.description="Platform for Tomcat" \
 
 COPY ./s2i/bin/ /usr/local/s2i
 
+RUN chmod -R g+rw /usr/local/tomcat && \
+    mkdir -p /usr/local/tomcat/webapps/healthz/WEB-INF/classes
+
+COPY ./util/healthz.class /usr/local/tomcat/webapps/healthz/WEB-INF/classes/ 
+COPY ./util/web.xml /usr/local/tomcat/webapps/healthz/WEB-INF/
+
 USER 1001
 
 EXPOSE 8080
